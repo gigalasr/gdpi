@@ -1,0 +1,12 @@
+src/*.aux
+src/*.fdb_latexmk
+src/*.fls
+src/*.log
+src/*.nav
+src/*.out
+src/*.synctex.gz
+src/*.snm
+src/*.toc
+src/*.vrb
+src/_minted-*
+src/*.pdf

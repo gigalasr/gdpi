@@ -1,0 +1,378 @@
+\documentclass[
+	aspectratio=169, 
+	10pt 
+]{beamer}
+
+\usepackage[utf8]{inputenc} 
+\usepackage{fancybeamer} 
+\usepackage{fancycolumn} 
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{varwidth}
+
+\title{Haskell Done Quick (01)} 
+\author{Lars Pfrenger} 
+\date{08. November 2024} 
+
+
+\begin{document}
+
+\maketitle
+
+\section{Organisatorisches}
+\begin{frame}{Who dis?}
+	\faAt \mbox{} Lars Pfrenger\break 
+	\faEnvelope \mbox{} lars.pfrenger@uni-ulm.de\break
+	\faGraduationCap \mbox{} 5. Semester Bachelor Software Engineering 
+	
+	\begin{flushright}
+        \includegraphics[width=0.3\textwidth, trim={0 0 12.5cm 0}]{assets/hello.png} % The image takes full width of this minipage
+    \end{flushright}
+
+\end{frame}
+
+
+\begin{frame}{Übung}
+	\begin{itemize}
+		\item 50\,\% auf 5/7 Blättern zum Bestehen
+		\item Blätter sind eine eigene Prüfungsleistung!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tutorium}
+	\begin{fancycolumns}[T,widths={60,40}]
+		\begin{itemize}
+			\item Jede Woche in 027/122
+			\item Neues Blatt jede 2. Woche
+			\item Abgabe bitte nicht handschriftlich \break (.pdf, .txt, .hs)
+			\item \underline{Nur Code der kompiliert wird bewertet} \begin{enumerate}[$\rightarrow$]
+				\item Nicht funktionierenden Code auskommentieren
+			\end{enumerate}
+		\end{itemize}
+		\nextcolumn
+		\begin{minted}[autogobble]{haskell}
+			-- Einzelner Kommentar
+
+			{- 
+				Kommentar der
+				über mehrere  
+				Zeilen geht :)
+			-}
+		\end{minted}
+	\end{fancycolumns}
+\end{frame}
+
+\begin{frame}{Tutorium}
+	\begin{description}[Woche A:]
+		\item[\textbf{Woche A}:] Lösungen Besprechen + Infos fürs nächste Blatt
+		\item[\textbf{Woche B}:] Infos fürs Blatt + Zeit zum Blatt bearbeiten + Fragen stellen
+	\end{description}
+\end{frame}
+
+\begin{frame}{Tutorium}
+	\center Stellt Fragen :D
+	\center Themenswünsche oder Fragen gerne per Mail an lars.pfrenger@uni-ulm.de
+\end{frame}
+
+\section{Haskell}
+\begin{frame}{Haskell}
+	\begin{fancycolumns}
+		\begin{info}{Deklerativ (z.B. Haskell)}
+			Wir beschreiben, \textbf{was} berechnet werden soll.
+		\end{info}
+		\nextcolumn
+		\begin{info}{Imperativ (z.B. Java)}
+			Wir beschreiben, \textbf{wie} etwas berechnet werden soll.
+		\end{info}
+	\end{fancycolumns}
+\end{frame}
+
+\begin{frame}[fragile]{Haskell}
+	\begin{fancycolumns}[T,widths={50,50}]
+		\textbf{Deklerativ}\break\mbox{}\newline
+		\begin{minipage}{0.5\textwidth}
+			\begin{minted}[autogobble]{haskell}
+				fib 0 = 0
+				fib 1 = 1
+				fib n = fib (n-1) + fib (n-2)
+			\end{minted}
+		\end{minipage}
+		\nextcolumn	
+		\textbf{Imperativ}\break\mbox{}\newline
+	\begin{minipage}{0.5\textwidth}
+		\begin{minted}[autogobble]{java}
+			int firstNumber = 0;
+			int secondNumber = 1;
+			int fibonacci = 0;
+
+			for (int i = 1; i < N; i++) {
+				fibonacci = 
+				firstNumber + secondNumber;
+				firstNumber = secondNumber;
+				secondNumber = fibonacci;
+			}
+		\end{minted}
+	\end{minipage}
+	\end{fancycolumns}
+\end{frame}
+
+\begin{frame}[t,fragile]{Haskell}
+	\begin{enumerate}[$\rightarrow$]
+		\item Haskell ist  \underline{Lazy}
+		\item Umgang mit Unendlichen Listen
+	\end{enumerate}
+	
+	\mbox{}\newline
+	\mbox{}\newline
+
+	\begin{center}
+		\begin{minipage}{0.2\textwidth}
+			\begin{minted}[autogobble]{haskell}
+				take 5 [1..]
+			\end{minted}
+		\end{minipage}
+		\end{center}
+
+
+\end{frame}
+
+\section{Blatt 1}
+\subsection{Aufgabe 1a}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Ist der Algorithmus deterministisch?}
+	Nein, der Algorithmus ist \textit{nicht deterministisch}, da in Schritt 1 eine zufällige
+	initiale Gästeliste gezogen wird. Außerdem geben die Schritte 2 und 3 nicht an,
+	für welche Gäste die Regeln zuerst angewandt werden sollen.
+	\end{exercise}
+
+	\mbox{}
+
+	\begin{enumerate}[$\rightarrow$]
+		\item "\textbf{Schritt 1} Zieh eine zufällige Liste von möglichen Gästen"
+		\item Ein Algorithmus heißt \textbf{deterministisch}, wenn die Wirkung und die Reihenfolge der Einzelschritte eindeutig festgelegt ist. \footnote[1]{\url{https://www.dbs.ifi.lmu.de/Lehre/EIP/WS1415/skript/EiP-04-DatenAlgorithmen-Teil2.pdf}}
+	\end{enumerate}  
+\end{frame}
+
+\subsection{Aufgabe 1b}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Terminiert der Algorithmus immer?}
+		Nein, es ist möglich, dass der Algorithmus nicht terminiert, wenn die gezogenen
+		initialen Listen immer zu einer ungenügend großen Gästeliste führen.
+	\end{exercise}
+
+	\mbox{}
+
+	\begin{enumerate}[$\rightarrow$]
+		\item \textbf{Terminierend}: Der Algorithmus endet für alle validen Schrittfolgen nach endlich vielen Schritten
+	\end{enumerate}
+\end{frame}
+
+\subsection{Aufgabe 1c}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Ist der Algorithmus partiell korrekt?}
+		Ja, denn Schritt 2 stellt sicher, dass alle Gäste hinzugefügt werden, sodass die
+		Aussagen von Typ 1 erfüllt sind, und Schritt 3 entfernt alle Gäste, sodass Aussagen
+		beider Typen erfüllt bleiben.
+	\end{exercise}
+
+	\mbox{}
+
+	\begin{enumerate}[$\rightarrow$]
+		\item Ein Algorithmus heißt \textbf{partiell korrekt}, wenn für alle gültigen Eingaben (Vorbedingung) das Resultat der Spezifikation (Nachbedingung) des Algorithmus entspricht. \footnote[1]{\url{https://www.dbs.ifi.lmu.de/Lehre/EIP/WS1415/skript/EiP-04-DatenAlgorithmen-Teil2.pdf}}
+	\end{enumerate}
+\end{frame}
+
+
+\subsection{Aufgabe 2a}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Ist der Algorithmus iterativ oder rekursiv beschrieben?}
+		Rekursiv
+	\end{exercise}
+
+	\mbox{}
+
+	$$
+	foo(a,b) = \begin{cases}
+		a 				& \text{wenn } a = b \\
+		foo(a, b-a) 	& \text{wenn } a < b \\
+		foo(b, a-b)		& \text{wenn } a > b
+	\end{cases}
+	$$
+
+\end{frame}
+
+
+\subsection{Aufgabe 2b}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Berechnen Sie das Ergebnis für die Eingabe...}
+		\begin{flalign*}
+			foo(12, 9) &=_{12>9} foo(9, 12 - 9) = foo(9, 3) \\
+					   &=_{9>3}  foo(3, 9 - 3)  = foo(3, 6) \\
+					   &=_{3<6}  foo(3, 6 - 3)  = foo(3, 3) \\
+					   &=_{3=3}  3
+		\end{flalign*}	
+		\mbox{}
+	\end{exercise}
+\end{frame}
+
+\subsection{Aufgabe 2c}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Beschreiben Sie in Ihren Worten, was der Algorithmus berechnet.}
+		Der Algorithmus berechnet den größten gemeinsamen Teiler zweier Zahlen.
+	\end{exercise}
+
+	\mbox{}
+
+	\begin{enumerate}[$\rightarrow$]
+		\item Euklidischer Algorithmus
+		\item Der Algorithmus nutzt aus, dass sich der größte gemeinsame Teiler zweier Zahlen nicht ändert, wenn man die kleinere von der größeren abzieht. \footnote[1]{\url{https://de.wikipedia.org/wiki/Euklidischer_Algorithmus}}
+	\end{enumerate}
+\end{frame}
+
+
+\subsection{Aufgabe 3a}
+\begin{frame}{\insertsubsection} 
+	\begin{exercise}{Ist der Algorithmus iterativ oder rekursiv beschrieben?}
+		Iterativ
+	\end{exercise}
+
+	\mbox{}
+
+	\begin{enumerate}[$\rightarrow$]
+		\item Schleife
+		\item Keine Funktionen, die sich selbst aufrufen
+	\end{enumerate}
+\end{frame}
+
+\subsection{Aufgabe 3b}
+\begin{frame}[fragile]{\insertsubsection} 
+	\begin{exercise}{Gegeben die Eingabe $n = 3$. Führen Sie den Algorithmus zeilenweise aus und geben Sie alle Zwischenzustände an. \underline{Geben Sie auch den Rückgabewert an.}}
+		\begin{flalign*}			
+					  \langle1 \mid \emptyset \rangle 
+			& \mapsto \langle2 \mid n=3 \rangle 
+			  \mapsto \langle3 \mid n=3, a=1 \rangle \\
+			& \mapsto \langle4 \mid n=3, a=1, b=1 \rangle 
+			  \mapsto \langle5 \mid n=3, a=1, b=1 \rangle \\
+			& \mapsto \langle6 \mid n=3, a=1, b=1, a_{alt}=1\rangle 
+			  \mapsto \langle7 \mid n=3, a=1, b=1, a_{alt}=1 \rangle \\
+			& \mapsto \langle8 \mid n=3, a=1, b=2, a_{alt}=1 \rangle 
+			  \mapsto \langle4 \mid n=2, a=1, b=2, a_{alt}=1 \rangle \\
+			& \dots \\
+			& \mapsto  \langle9 \mid n=0, a=3, b=5, a_{alt}=2 \rangle \mapsto 3
+		\end{flalign*}
+	\end{exercise}
+
+	\begin{enumerate}[$\rightarrow$]
+		\item Aufgabe komplett Lesen: \underline{Geben Sie auch den Rückgabewert an.}
+	\end{enumerate}
+\end{frame}
+
+
+\subsection{Aufgabe 3c}
+\begin{frame}[fragile]{\insertsubsection} 
+	\begin{exercise}{Beschreiben Sie in Ihren Worten, was der Algorithmus berechnet.}
+		Der Algorithmus berechnet eine Folge von $n$ Zahlen, beginnend mit $1, 1,$ bei der
+		ein Element jeweils die Summe der beiden Element davor ist. Diese Folge wird
+		auch die Fibonacci-Folge genannt.
+	\end{exercise}
+\end{frame}
+
+
+\section{Blatt 2}
+\begin{frame}[fragile]{Funktionsdekleration} 
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+		foo :: Int -> Double -> Double
+	\end{minted}
+
+	\pause
+	\vspace{-1.5em}
+	\hspace{1.2cm}
+	$\underbrace{\hspace{2.4cm}}_{\text{Parameter}}$
+	
+	\pause
+	\vspace{-2.3em}
+	\hspace{4.2cm}
+	$\underbrace{\hspace{1.1cm}}_{\text{Return Type}}$
+	
+	\pause
+	\vspace{1.0cm}
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+		foo x y = fromIntegral x * y
+	\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile,t]{Funktionsdekleration} 
+	\underline{Beispiel}: Wir wollen nur Tupel vom Typ \mintinline{haskell}{(Int, Int)} erlauben
+
+	\begin{minted}[autogobble]{haskell}
+		fst :: (Int, Int) -> Int 
+	\end{minted}
+
+	\begin{minted}[autogobble]{haskell}
+		fst (a, b) = a 
+	\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile,t]{Tupel (im Vergleich zur Liste)}
+	\mintinline{haskell}{(1, 5, "Hallo")} \onslide<2->{\mintinline{haskell}{:: (Num, Num, String)}}
+
+
+	\vspace{1cm}
+
+	\begin{itemize}
+		\item Fixe Anzahl an Elementen
+		\item Verschiedene Typen erlaubt
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,t]{Tupel}
+	\begin{minted}[autogobble]{haskell}
+		fst (x, y) = x -- Erstes Element
+		snd (x, y) = y -- Zweites Element  
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Listen} 
+	\begin{minted}[autogobble]{haskell}
+		1 : [2,3]          = [1,2,3]       -- Element einfügen
+		[1,2,3] ++ [4,5,6] = [1,2,3,4,5,6] -- Listen konkatenieren
+		head [1,2,3]       = 1             -- 1. Element
+		last [1,2,3]       = 3             -- Letzte ELement
+		tail [1,2,3]       = [2,3]         -- Alle außer das 1.
+		init [1,2,3]       = [1,2]         -- Alle außer das letzte
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Typevariablen}
+	\begin{minted}[autogobble]{haskell}
+		fst :: (a, b) -> a
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Typevariablen mit Klassen Constraints}
+	\begin{minted}[autogobble]{haskell}
+		(==) :: (Eq a) => a -> a -> Bool
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{ghci} 
+	\begin{minted}[autogobble]{haskell}
+		:t <Identifier>  -- Typ Signatur ausgeben lassen
+		:l <filename.hs> -- Datei laden
+		:r               -- Datei neu laden
+	\end{minted}
+\end{frame}
+
+\begin{frame}{Ende}
+	\center Danke für Eure Aufmerksamkeit
+\end{frame}
+
+\end{document}

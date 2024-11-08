@@ -1,0 +1,228 @@
+% =============================================
+% FANCY BEAMER
+% =============================================
+
+% ---------------------------------------------
+% import packages
+% ---------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage{xargs} % used to define/renew commands with multiple optional parameters
+\usepackage{color}
+\usepackage{fitbox} % used to auto-scale long frame titles
+\usepackage{tcolorbox} % used for color boxes (definition, example, note)
+\usepackage{ifthen}
+\usepackage{multicol} % for auto multi-column in content overview
+\usepackage{catchfile} % for automatic link on pictures
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor}
+
+% ---------------------------------------------
+% general settings
+% ---------------------------------------------
+\beamertemplatenavigationsymbolsempty % remove the default navigation symbols
+
+\newif\ifuniqueslidenumbersuffix
+\newif\ifsectiontitleslide % for enabling the automatic section title slide at the begin of each section
+\newif\ifsectionoverview % for enabling the automatic section overview on the section title slide
+
+\DeclareOption{nosectionframes}{\sectiontitleslidefalse \sectionoverviewfalse}
+\DeclareOption{sectiontitleslides}{\sectiontitleslidetrue \sectionoverviewfalse}
+\DeclareOption{sectionoverviews}{\sectiontitleslidetrue \sectionoverviewtrue}
+\DeclareOption{uniqueslidenumber}{\uniqueslidenumbersuffixtrue}
+\DeclareOption{darkmode}{\darkmodetrue}
+
+\ExecuteOptions{sectiontitleslides} % use sectiontitleslides as default
+\mode<handout>{\ExecuteOptions{sectionoverviews}} % use sectionoverviews as default in handout mode
+
+\ProcessOptions
+
+\setlength{\parskip}{1.5ex} % set the parskip
+\newcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}} % use parskip also in minipages (also used for tcolorbox)
+
+% ---------------------------------------------
+% colors
+% ---------------------------------------------
+
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{FFFFFF}
+
+\definecolor{red}{HTML}{A32638}
+\definecolor{green}{HTML}{56AA1C}
+\definecolor{blue}{HTML}{26547C}
+\definecolor{orange}{HTML}{DF6D07}
+\definecolor{accent}{HTML}{A9A28D}
+\colorlet{accenttwo}{red} 
+\colorlet{foreground}{black}
+\colorlet{background}{white}
+\colorlet{boxmix}{white}
+
+% set beamer colors
+\setbeamercolor{background canvas}{bg=background}
+\setbeamercolor{frametitle}{fg=foreground}
+\setbeamercolor{structure}{fg=foreground}
+\setbeamercolor{normal text}{fg=foreground}
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=structure.fg!95!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg!90!black}
+\setbeamercolor*{palette quaternary}{use=structure,fg=structure.fg!95!black,bg=black!80}
+\setbeamercolor{item}{fg=foreground}
+\setbeamercolor{itemize/enumerate body}{use=normal text,fg=normal text.fg}
+\setbeamercolor{itemize/enumerate subbody}{use=itemize/enumerate body,fg=itemize/enumerate body.fg}
+\setbeamercolor{itemize/enumerate subsubbody}{use=itemize/enumerate subbody,fg=itemize/enumerate subbody.fg}
+\setbeamercolor{logobox}{bg=white}
+\setbeamercolor{section in toc}{fg=foreground}
+\setbeamercolor{subsection in toc}{fg=foreground}
+
+\setbeamercolor{myfooter}{fg=white,bg=accent}
+\setbeamercolor{mypagenumber}{fg=white,bg=accenttwo}
+\setbeamercolor{titlebox}{fg=white,bg=accenttwo}
+\setbeamercolor{subtitlebox}{fg=white,bg=accent}
+
+% ---------------------------------------------
+% fonts
+% ---------------------------------------------
+\setbeamerfont{frametitle}{size=\LARGE, series=\bfseries}
+\setbeamerfont{section title}{size=\Huge, series=\bfseries}
+\setbeamerfont{section in toc}{size=\large, series=\bfseries}
+
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+
+% ---------------------------------------------
+% list environments
+% ---------------------------------------------
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate item}{\arabic{enumi}.}
+\setbeamertemplate{enumerate subitem}{\arabic{enumii}.}
+\setbeamertemplate{enumerate subsubitem}{\arabic{enumiii}.}
+\setbeamertemplate{section in toc}[sections numbered]
+
+% ---------------------------------------------
+% frame layout
+% ---------------------------------------------
+
+\def\fancy@titlepage@margin{20pt}
+\newcommand{\@createtitleslide}{{
+  \begin{frame}[plain]
+    \vskip14mm
+    \resizebox{\textwidth}{!}{\begin{minipage}{360mm}\noindent\lstinputlisting[basicstyle=\ttfamily]{assets/haskell.ascii}\end{minipage}}%
+    \vskip0pt plus 1filll
+        \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,right]{titlebox}
+            \LARGE\textbf{\inserttitle}\hspace*{20pt}
+        \end{beamercolorbox}%
+        \nointerlineskip%
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right,rightskip=\fancy@titlepage@margin]{subtitlebox}
+            \small
+            \ifx \insertsubtitle \empty \else \insertsubtitle\ $\vert$ \fi
+            \makeatletter
+            \ifx \beamer@shortauthor \empty \else \insertauthor\ $\vert$ \fi
+            \makeatother
+            \ifx \insertdate \empty \else \insertdate \fi
+        \end{beamercolorbox}%
+        \nointerlineskip
+    \end{frame}
+    }
+}
+
+\renewcommandx{\maketitle}[0]{
+    \@createtitleslide
+}
+
+\newcommand{\againtitle}{
+    \ifcsname fancytitlepicture\endcsname
+        \@createtitleslide
+    \else
+        \PackageError{fancybeamer}{To use \string\againtitle\space you must first use \string\maketitle!}{Either comment out this line or check if you forgot to issue the \string\maketitle-macro.}%
+    \fi
+}
+
+\setbeamertemplate{frametitle}{
+    \vspace{20pt}%
+    \vphantom{/}\setbox0=\hbox{\insertframetitle}%
+    \ifdim\wd0<\textwidth
+    \insertframetitle
+    \else\let\hfill\space\resizebox\linewidth!{\insertframetitle}\fi
+}
+\ifuniqueslidenumbersuffix
+    \def\fancy@page{\insertframenumber\ifnum\insertframestartpage=\insertframeendpage\else\rlap{\color{fg!50!bg}.\insertslidenumber}\fi}
+\else
+    \def\fancy@page{\insertframenumber}
+\fi
+\setbeamertemplate{footline}{
+    \hypersetup{linkcolor = white}
+    \hbox{%
+        \begin{beamercolorbox}[wd=0.93\textwidth,ht=3mm,dp=1.5mm,left]{myfooter}
+            \hspace{0.03\textwidth}
+            \insertshortauthor
+            \hfill
+            \insertshorttitle\
+            \ifx \insertsubtitle \empty \else {-- \insertshortsubtitle} \fi
+            \ifx \insertsectionhead \empty \else {-- \thesection.~\insertsectionhead} \fi
+            \hspace{0.03\textwidth}
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.07\textwidth,ht=3mm,dp=1.5mm,center]{mypagenumber}
+            \usebeamerfont{page number in head/foot}%
+            \fancy@page
+        \end{beamercolorbox}%
+    }%
+}
+
+% ---------------------------------------------
+% table of contents
+% ---------------------------------------------
+\ifsectiontitleslide
+\AtBeginSection{
+    \ifsectionoverview
+    \begin{frame}{\thesection.~\insertsection}
+        \linespread{.5}
+        \vfill
+        \tableofcontents[currentsection,hideothersubsections]
+    \end{frame}
+    \else
+    \begin{frame}
+        \usebeamerfont{section title}\textbf{\thesection.~\insertsection}
+    \end{frame}
+    \fi
+}
+\fi
+
+\newcommand{\contentoverview}[1][1]{
+    \begin{frame}{\inserttitle}
+        \linespread{.5}
+        \vfill
+        \ifthenelse{#1>1}{ % use multiple columns if more than one column is specified
+            \begin{multicols}{#1}
+                \tableofcontents
+            \end{multicols}
+        }{
+            \tableofcontents
+        }
+
+    \end{frame}
+}
+
+\newtcolorbox{exercise}[1]{
+	colback=green!10, 
+	colframe=green!60, 
+	left=1mm,
+	right=1mm,
+	bottom=1mm,
+	top=1mm,
+	toptitle=0.5mm,
+	bottomtitle=0.0mm,
+	boxrule=0.1mm,
+	title={#1}
+}
+
+\newtcolorbox{info}[1]{
+	colback=blue!10, 
+	colframe=blue!60, 
+	left=1mm,
+	right=1mm,
+	bottom=1mm,
+	top=1mm,
+	toptitle=0.5mm,
+	bottomtitle=0.0mm,
+	boxrule=0.1mm,
+	title={#1}
+}
