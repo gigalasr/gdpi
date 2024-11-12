@@ -1,14 +1,11 @@
 # GDPI Tutorium
 _Folien für mein Tutorium für Grundlagen der Praktischen Informatik_
 
-[![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/) [![LaTeX Build](https://github.com/FIN-Uni-Ulm/how-to-studium/actions/workflows/compile.yaml/badge.svg)](https://github.com/FIN-Uni-Ulm/how-to-studium/actions/workflows/compile.yaml) 
+[![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/) [![LaTeX Build](https://github.com/by-lars/gdpi/actions/workflows/compile.yaml/badge.svg)](https://github.com/by-lars/gdpi/actions/workflows/compile.yaml) 
 
-[![Folien](https://github.com/FIN-Uni-Ulm/how-to-studium/raw/refs/heads/build/out/slides_main_preview.png?download=)](https://github.com/FIN-Uni-Ulm/how-to-studium/raw/refs/heads/build/out/slides_main.pdf?download=)
-<div align="center">
+## Folien 
+- [Tutorium 01 (08.11.24)](https://github.com/by-lars/gdpi/raw/refs/heads/build/out/01.pdf?download=)
 
-[PDF Download](https://github.com/FIN-Uni-Ulm/how-to-studium/raw/refs/heads/build/out/slides_main.pdf?download=)
-
-</div>
 
 ## Mitwirken
 - Bei Feedback oder Fragen gerne ein neues Issue erstellen. 

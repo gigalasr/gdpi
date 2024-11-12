@@ -3,18 +3,8 @@
 	10pt 
 ]{beamer}
 
-\usepackage[utf8]{inputenc} 
 \usepackage{fancybeamer} 
 \usepackage{fancycolumn} 
-\usepackage{listings}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{tcolorbox}
-\usepackage{xcolor}
-\usepackage{fontawesome5}
-\usepackage{minted}
-\usepackage{tcolorbox}
-\usepackage{varwidth}
 
 \title{Haskell Done Quick (01)} 
 \author{Lars Pfrenger} 
@@ -37,15 +27,16 @@
 
 \end{frame}
 
-
-\begin{frame}{Übung}
+\subsection{Übung}
+\begin{frame}{\insertsubsection}
 	\begin{itemize}
 		\item 50\,\% auf 5/7 Blättern zum Bestehen
 		\item Blätter sind eine eigene Prüfungsleistung!
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Tutorium}
+\subsection{Tutorium}
+\begin{frame}[fragile]{\insertsubsection}
 	\begin{fancycolumns}[T,widths={60,40}]
 		\begin{itemize}
 			\item Jede Woche in 027/122
@@ -68,20 +59,21 @@
 	\end{fancycolumns}
 \end{frame}
 
-\begin{frame}{Tutorium}
+\begin{frame}{\insertsubsection}
 	\begin{description}[Woche A:]
 		\item[\textbf{Woche A}:] Lösungen Besprechen + Infos fürs nächste Blatt
 		\item[\textbf{Woche B}:] Infos fürs Blatt + Zeit zum Blatt bearbeiten + Fragen stellen
 	\end{description}
 \end{frame}
 
-\begin{frame}{Tutorium}
+\begin{frame}{\insertsubsection}
 	\center Stellt Fragen :D
 	\center Themenswünsche oder Fragen gerne per Mail an lars.pfrenger@uni-ulm.de
 \end{frame}
 
 \section{Haskell}
-\begin{frame}{Haskell}
+\subsection{Deklerativ vs Imperativ}
+\begin{frame}{\insertsubsection}
 	\begin{fancycolumns}
 		\begin{info}{Deklerativ (z.B. Haskell)}
 			Wir beschreiben, \textbf{was} berechnet werden soll.
@@ -93,7 +85,7 @@
 	\end{fancycolumns}
 \end{frame}
 
-\begin{frame}[fragile]{Haskell}
+\begin{frame}[fragile]{\insertsubsection}
 	\begin{fancycolumns}[T,widths={50,50}]
 		\textbf{Deklerativ}\break\mbox{}\newline
 		\begin{minipage}{0.5\textwidth}
@@ -122,7 +114,8 @@
 	\end{fancycolumns}
 \end{frame}
 
-\begin{frame}[t,fragile]{Haskell}
+\subsection{Laziness}
+\begin{frame}[t,fragile]{\insertsubsection}
 	\begin{enumerate}[$\rightarrow$]
 		\item Haskell ist  \underline{Lazy}
 		\item Umgang mit Unendlichen Listen
@@ -285,7 +278,8 @@
 
 
 \section{Blatt 2}
-\begin{frame}[fragile]{Funktionsdekleration} 
+\subsection{Funktionsdekleration}
+\begin{frame}[fragile]{\insertsubsection} 
 	\begin{minted}[autogobble,escapeinside=||]{haskell}
 		foo :: Int -> Double -> Double
 	\end{minted}
@@ -308,7 +302,7 @@
 
 \end{frame}
 
-\begin{frame}[fragile,t]{Funktionsdekleration} 
+\begin{frame}[fragile,t]{\insertsubsection} 
 	\underline{Beispiel}: Wir wollen nur Tupel vom Typ \mintinline{haskell}{(Int, Int)} erlauben
 
 	\begin{minted}[autogobble]{haskell}
@@ -321,7 +315,8 @@
 
 \end{frame}
 
-\begin{frame}[fragile,t]{Tupel (im Vergleich zur Liste)}
+\subsection{Tupel}
+\begin{frame}[fragile,t]{\insertsubsection}
 	\mintinline{haskell}{(1, 5, "Hallo")} \onslide<2->{\mintinline{haskell}{:: (Num, Num, String)}}
 
 
@@ -333,14 +328,15 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile,t]{Tupel}
+\begin{frame}[fragile,t]{\insertsubsection}
 	\begin{minted}[autogobble]{haskell}
 		fst (x, y) = x -- Erstes Element
 		snd (x, y) = y -- Zweites Element  
 	\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Listen} 
+\subsection{Listen}
+\begin{frame}[fragile]{\insertsubsection} 
 	\begin{minted}[autogobble]{haskell}
 		1 : [2,3]          = [1,2,3]       -- Element einfügen
 		[1,2,3] ++ [4,5,6] = [1,2,3,4,5,6] -- Listen konkatenieren
@@ -351,19 +347,22 @@
 	\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Typevariablen}
+\subsection{Typevariablen}
+\begin{frame}[fragile]{\insertsubsection}
 	\begin{minted}[autogobble]{haskell}
 		fst :: (a, b) -> a
 	\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Typevariablen mit Klassen Constraints}
+\subsection{Klassen Constraints}
+\begin{frame}[fragile]{\insertsubsection}
 	\begin{minted}[autogobble]{haskell}
 		(==) :: (Eq a) => a -> a -> Bool
 	\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{ghci} 
+\subsection{ghci}
+\begin{frame}[fragile]{\insertsubsection} 
 	\begin{minted}[autogobble]{haskell}
 		:t <Identifier>  -- Typ Signatur ausgeben lassen
 		:l <filename.hs> -- Datei laden
@@ -371,6 +370,7 @@
 	\end{minted}
 \end{frame}
 
+\section{Ende}
 \begin{frame}{Ende}
 	\center Danke für Eure Aufmerksamkeit
 \end{frame}
