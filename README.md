@@ -9,7 +9,7 @@ _Folien für mein Tutorium für Grundlagen der Praktischen Informatik_
 
 ## Mitwirken
 - Bei Feedback oder Fragen gerne ein neues Issue erstellen. 
-- Vor dem Klonen muss ``git lfs`` installiert sein. Zusätzlich sollte mit ``--recurse-submodules`` geklont werden. 
+- Vor dem Klonen muss ``git lfs`` installiert sein.
 
 ## Danksagungen
 - Danke an [@EagleoutIce](https://github.com/EagleoutIce) für fancyqr, tikzpingus, fancybeamer und das schnelle Beantworten meiner LaTeX Fragen :) 
