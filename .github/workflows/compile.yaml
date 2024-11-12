@@ -1,0 +1,34 @@
+name: LaTeX Build
+'on':
+  push:
+    branches:
+    - main
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: platinshadow/latex:1.0.1
+    steps:
+    - name: Checkout git repository
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+        submodules: true
+        fetch-depth: 0
+    - name: Build LaTeX
+      run: make pdf
+    - name: Commit
+      run: |
+        git config --global --add safe.directory /__w/gdpi/gdpi
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add -f "out/*.pdf" "out/*.png"
+        git commit -m "Compile LaTeX"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: build
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
