@@ -24,7 +24,7 @@ jobs:
         git config --global --add safe.directory /__w/gdpi/gdpi
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
-        git add -f "out/*.pdf" "out/*.png"
+        git add -f "out/*.pdf"
         git commit -m "Compile LaTeX"
     - name: Push changes
       uses: ad-m/github-push-action@master
