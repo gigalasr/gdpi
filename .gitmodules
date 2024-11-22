@@ -1,0 +1,3 @@
+[submodule "vendor/latex-lambda-calculus-visualizer"]
+	path = vendor/latex-lambda-calculus-visualizer
+	url = https://github.com/EagleoutIce/latex-lambda-calculus-visualizer.git

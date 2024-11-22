@@ -1,3 +1,4 @@
+\errorcontextlines9999
 \documentclass[
 	aspectratio=169, 
 	10pt 
@@ -5,18 +6,177 @@
 
 \usepackage{fancybeamer} 
 \usepackage{fancycolumn} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+
+\newcommand\conly[2]{\only<#1>{#2}}
 
 \title{Haskell Done Quick (02)} 
 \author{Lars Pfrenger} 
-\date{15. November 2024} 
+\date{22. November 2024} 
+
 
 \begin{document}
 
 \maketitle
 
-% - toEnum fromEnum toIntegral
-% - lambda kalkül 
-% - typ klassen
+\section{Typen und Typklassen}
+
+% 1. Warum ist ein typ system sinvoll?
+%	1. Beispiel: Reddit Post Lua Skript
+\subsection{Aber warum?}
+\begin{frame}[t,fragile]{\insertsubsection}
+	\large\href{https://www.reddit.com/r/programminghorror/comments/1gvkile/i_spent_3_hours_trying_to_find_the_bug_here/}{\faReddit \space "I spent 3 hours trying to find the 'bug' here"}\normalsize
+	\bigskip
+	\pause
+	\setminted{escapeinside=||}
+	\begin{minted}[autogobble]{lua}
+		elseif args[1] == "SaveToolSlot" then
+			local backpackStuff = Leaderstats:Get(player, "Backpack")
+		
+			for _,v in pairs(backpackStuff) do
+				local |\conly{2}{match}\conly{3}{\colorbox{Red!50}{match}}| = string.match(v, args[2])
+			
+				if |\conly{2}{math}\conly{3}{\colorbox{Red!50}{math}}| ~= nil then
+					backpackStuff[v] = args[2].."_"..args[3]
+				end
+			end
+	
+	\end{minted}
+\end{frame}
+
+
+%	2. Beispiel: Flugzeug
+%	3. LiquidHaskell
+\begin{frame}{\insertsubsection}
+	\begin{itemize}
+		\item Fehler erkennen bevor das Programm ausgeführt wird 
+		\item Kritische Systeme (z.B. Flugzeuge)
+		\item \href{https://ucsd-progsys.github.io/liquidhaskell/}{LiquidHaskell} $\rightarrow$ Beweise auf/mit Code führen
+	\end{itemize}
+\end{frame}
+
+% 3. Primitive Typen 
+\subsection{Primitive Typen}
+\begin{frame}{\insertsubsection}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{>{\bfseries\color{red}}lll}
+		Type & Wertebereich & Beispiel\\\\
+		Bool & \mintinline{haskell}{False}, \mintinline{haskell}{True} & \mintinline{haskell}{False} \\
+		Char & Zeichen & \mintinline{haskell}{'a'} \\
+		String & Zeichenkette & \mintinline{haskell}{"Hallo Welt"} \\
+		Int & Ganzzahlen mind. $[-2^{29}, 2^{29}-1]$ & $42$ \\
+		Integer & Ganzzahlen (theoretisch) beliebig Groß & $2^{100}$ \\
+		Float & IEEE single precision Gleitkommazahl  & 1.2345678 \\
+		Double & IEEE double precision Gleitkommazahl & 1.234567890234567\\
+	\end{tabular}
+\end{frame}
+
+
+% 4. Typ Klassen
+%	1. Welches Problem lösen Typ Klassen?
+\subsection{Warum Typ Klassen?}
+\begin{frame}[fragile]{\insertsubsection}
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+		(==) :: |\conly{1}{Eq => }|a -> a -> Bool
+	\end{minted}
+
+	\onslide<3->{
+	\begin{enumerate}
+		\item[$\Rightarrow$] \mintinline{haskell}{(==)} würde für alle Typen valide sein 
+		\item[$\Rightarrow$] man soll aber nur bestimmte Typen vergleichen können 
+		\item[$\Rightarrow$] z.B. Funktionen vergleichen macht kein Sinn
+	\end{enumerate}
+	}
+\end{frame}
+
+%	2. Klassen Definition
+\subsection{Typklassen Definition}
+\begin{frame}[fragile]{\insertsubsection}
+	
+	Klassendefinition:
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+	class Eq |\conly{3}{\colorbox{Blue!40}}{a}| where 
+	 |\conly{3}{\colorbox{Green!40}}{(==)}| :: a -> a -> Bool
+	\end{minted}
+
+	\pause
+	\bigskip
+	\bigskip
+
+%	3. Instanz 
+	Instanz:
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+	instance Eq |\conly{3}{\colorbox{Blue!40}}{Float}| where
+	  |\conly{3}{\colorbox{Green!40}}{x == y}| = x `floatEq` y	
+	\end{minted}
+
+	\bigskip
+	$\Rightarrow$ \mintinline{haskell}{(==)} kann auf \mintinline{haskell}{Float} benutzt werden 
+\end{frame}
+
+
+% 5. Syntax
+	% 1. 5 :: Integer (wert mit typ assoziieren (read as "has type"))
+	%  (==)                    :: (Eq a) => a -> a -> Bool  (contex / constraint)
+\subsection{Syntax}
+\begin{frame}[fragile]{\insertsubsection}
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+		(==) :: (Eq a) => a -> a -> Bool
+	\end{minted}
+	
+	\vspace{-1.5em}
+	\hspace{-0.1cm}
+	$\underbrace{\hspace{0.5cm}}_{\text{Name}}$
+
+	\vspace{-2.3em}
+	\hspace{1.3cm}
+	$\underbrace{\hspace{1.0cm}}_{\text{Constraint}}$
+
+	\vspace{-2.3em}
+	\hspace{3.2cm}
+	$\underbrace{\hspace{2.6cm}}_{\text{Typsignatur}}$
+
+	\pause
+	\bigskip
+	\bigskip
+
+	$\Rightarrow$ "Wenn a die Klasse \mintinline{haskell}{Eq} implementiert, dann hat \mintinline{haskell}{(==)} den Typen \mintinline{haskell}{a -> a -> Bool}"
+
+\end{frame}
+
+\subsection{Typklassen}
+\begin{frame}{\insertsubsection}
+	% Florian, please forgive me for my sins 
+	\includegraphics[width=\textwidth]{assets/typeklassen.png}
+\end{frame}
+% 6. toEnum fromEnum toIntegral
+
+% 7. GHCI :t, :info
+
+\subsection{GHCI}
+\begin{frame}[fragile]{\insertsubsection}
+	\begin{minted}[autogobble,escapeinside=||]{haskell}
+		ghci> :info Num
+		|\pause|
+		type Num :: * -> Constraint
+		class Num a where
+		  (+) :: a -> a -> a
+		  (-) :: a -> a -> a
+		  (*) :: a -> a -> a
+		
+		  ...
+		 
+		instance Num Double -- Defined in ‘GHC.Float’
+		instance Num Float -- Defined in ‘GHC.Float’
+		instance Num Int -- Defined in ‘GHC.Num’
+		instance Num Integer -- Defined in ‘GHC.Num’
+		instance Num Word -- Defined in ‘GHC.Num’
+	\end{minted}
+\end{frame}
+
+
 
 \begin{frame}{Ende}
 	\center Danke für Eure Aufmerksamkeit

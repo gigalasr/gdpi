@@ -10,3 +10,4 @@ src/*.toc
 src/*.vrb
 src/_minted-*
 src/*.pdf
+.vscode
