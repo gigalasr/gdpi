@@ -4,6 +4,7 @@ _Folien für mein Tutorium für Grundlagen der Praktischen Informatik_
 [![made-with-latex](https://img.shields.io/badge/Made%20with-LaTeX-1f425f.svg)](https://www.latex-project.org/) [![LaTeX Build](https://github.com/gigalasr/gdpi/actions/workflows/compile.yaml/badge.svg)](https://github.com/gigalasr/gdpi/actions/workflows/compile.yaml) 
 
 ## Folien 
+- [Tutorium 02 (22.11.24)](https://github.com/gigalasr/gdpi/raw/refs/heads/build/out/02.pdf?download=)
 - [Tutorium 01 (08.11.24)](https://github.com/gigalasr/gdpi/raw/refs/heads/build/out/01.pdf?download=)
 
 
@@ -15,4 +16,5 @@ _Folien für mein Tutorium für Grundlagen der Praktischen Informatik_
 - Danke an [@EagleoutIce](https://github.com/EagleoutIce) für fancyqr, tikzpingus, fancybeamer und das schnelle Beantworten meiner LaTeX Fragen :) 
 
 ## Changelog
+- 22.11.24: Slides for Tut02
 - 09.11.24: Slides for Tut01
