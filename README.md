@@ -17,5 +17,6 @@ _Folien für mein Tutorium für Grundlagen der Praktischen Informatik_
 - Danke an [@EagleoutIce](https://github.com/EagleoutIce) für fancyqr, tikzpingus, fancybeamer und das schnelle Beantworten meiner LaTeX Fragen :) 
 
 ## Changelog
+- 07.02.25: Slides for Tut03
 - 22.11.24: Slides for Tut02
 - 09.11.24: Slides for Tut01
