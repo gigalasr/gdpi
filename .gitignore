@@ -11,3 +11,5 @@ src/*.vrb
 src/_minted-*
 src/*.pdf
 .vscode
+src/out
+out
